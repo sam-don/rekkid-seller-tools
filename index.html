@@ -54,16 +54,10 @@
       height: 60px;
     }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: var(--dark);
-      text-decoration: none;
-      letter-spacing: -0.04em;
-    }
-
-    .logo span {
-      color: var(--orange);
+    .logo img {
+      height: 36px;
+      width: auto;
+      display: block;
     }
 
     nav ul {
@@ -214,108 +208,19 @@
       background: rgba(255,255,255,0.08);
     }
 
-    /* RECORD VISUAL */
+    /* HERO VISUAL */
     .hero-visual {
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
     }
 
-    .record-wrap {
-      position: relative;
-      width: 320px;
-      height: 320px;
-    }
-
-    .record {
+    .hero-photo {
       width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: conic-gradient(
-        #0d0d0d 0deg,
-        #1a1a1a 10deg,
-        #0d0d0d 20deg,
-        #1a1a1a 30deg,
-        #0d0d0d 40deg,
-        #1a1a1a 50deg,
-        #0d0d0d 60deg,
-        #1a1a1a 70deg,
-        #0d0d0d 80deg,
-        #1a1a1a 90deg,
-        #0d0d0d 100deg,
-        #1a1a1a 110deg,
-        #0d0d0d 120deg,
-        #1a1a1a 130deg,
-        #0d0d0d 140deg,
-        #1a1a1a 150deg,
-        #0d0d0d 160deg,
-        #1a1a1a 170deg,
-        #0d0d0d 180deg,
-        #1a1a1a 190deg,
-        #0d0d0d 200deg,
-        #1a1a1a 210deg,
-        #0d0d0d 220deg,
-        #1a1a1a 230deg,
-        #0d0d0d 240deg,
-        #1a1a1a 250deg,
-        #0d0d0d 260deg,
-        #1a1a1a 270deg,
-        #0d0d0d 280deg,
-        #1a1a1a 290deg,
-        #0d0d0d 300deg,
-        #1a1a1a 310deg,
-        #0d0d0d 320deg,
-        #1a1a1a 330deg,
-        #0d0d0d 340deg,
-        #1a1a1a 350deg,
-        #0d0d0d 360deg
-      );
-      box-shadow:
-        0 0 0 2px #333,
-        0 40px 80px rgba(0,0,0,0.6),
-        inset 0 0 60px rgba(0,0,0,0.4);
-      animation: spin 12s linear infinite;
-      position: relative;
-    }
-
-    .record::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 88px;
-      height: 88px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, #3d1a00, #1a0a00);
-      border: 2px solid rgba(234, 88, 12, 0.4);
-      box-shadow: 0 0 20px rgba(234, 88, 12, 0.2);
-    }
-
-    .record-hole {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--dark);
-      z-index: 2;
-    }
-
-    .record-glow {
-      position: absolute;
-      inset: -20px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(234, 88, 12, 0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      max-width: 500px;
+      border-radius: 16px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+      display: block;
     }
 
     /* STATS BAR */
@@ -418,21 +323,20 @@
     }
 
     .product-visual {
-      height: 180px;
-      background: var(--dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      position: relative;
+      height: 220px;
       overflow: hidden;
     }
 
-    .product-visual::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(234,88,12,0.1) 0%, transparent 60%);
+    .product-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover .product-visual img {
+      transform: scale(1.04);
     }
 
     .product-body {
@@ -498,60 +402,12 @@
       line-height: 1.5;
     }
 
-    /* STACKED RECORDS VISUAL */
-    .records-stack {
-      position: relative;
-      height: 340px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .stack-record {
-      position: absolute;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-      border: 1px solid #2a2a2a;
-    }
-
-    .stack-record::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #3d1a00, #1a0a00);
-      border: 1px solid rgba(234, 88, 12, 0.3);
-    }
-
-    .stack-record:nth-child(1) { transform: translateX(-60px) translateY(20px) rotate(-8deg); opacity: 0.5; }
-    .stack-record:nth-child(2) { transform: translateX(-20px) translateY(10px) rotate(-3deg); opacity: 0.75; }
-    .stack-record:nth-child(3) { transform: translateX(20px) rotate(4deg); }
-    .stack-record:nth-child(4) { transform: translateX(60px) translateY(-10px) rotate(10deg); opacity: 0.75; }
-
-    .stack-holder {
-      position: absolute;
-      bottom: 40px;
-      width: 260px;
-      height: 80px;
-      background: linear-gradient(145deg, #f5f0e8, #e8ddd0);
-      border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      border: 1px solid rgba(0,0,0,0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    /* ABOUT PHOTO */
+    .about-photo {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 16px 56px rgba(0,0,0,0.12);
+      display: block;
     }
 
     /* CTA */
@@ -616,14 +472,12 @@
       gap: 16px;
     }
 
-    .footer-logo {
-      font-size: 1.1rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      color: rgba(255,255,255,0.7);
+    .footer-logo img {
+      height: 28px;
+      width: auto;
+      display: block;
+      filter: brightness(0) invert(0.7);
     }
-
-    .footer-logo span { color: var(--orange); }
 
     footer a {
       color: rgba(255,255,255,0.5);
@@ -642,7 +496,6 @@
     @media (max-width: 768px) {
       .hero-inner { grid-template-columns: 1fr; gap: 48px; }
       .hero-visual { order: -1; }
-      .record-wrap { width: 220px; height: 220px; }
       .products-grid { grid-template-columns: 1fr; }
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
       .stats-inner { gap: 16px; }
@@ -661,7 +514,7 @@
 
   <nav>
     <div class="nav-inner">
-      <a href="/" class="logo">rekk<span>id</span></a>
+      <a href="/" class="logo"><img src="/images/logo.webp" alt="Rekkid" /></a>
       <ul>
         <li><a href="#products">Products</a></li>
         <li><a href="#about">About</a></li>
@@ -689,11 +542,7 @@
         </div>
       </div>
       <div class="hero-visual">
-        <div class="record-wrap">
-          <div class="record"></div>
-          <div class="record-hole"></div>
-          <div class="record-glow"></div>
-        </div>
+        <img src="/images/product-shelf-display.webp" alt="Rekkid Now Playing and Up Next record display stands on a shelf" class="hero-photo" />
       </div>
     </div>
   </header>
@@ -722,29 +571,35 @@
   <section id="products" class="products">
     <div class="section-inner">
       <div class="section-tag">Our products</div>
-      <h2 class="section-title">A place for every record.</h2>
-      <p class="section-sub">From wall-mounted display to desktop storage, we make pieces that show off your collection as much as protect it.</p>
+      <h2 class="section-title">A stand for every moment.</h2>
+      <p class="section-sub">Now Playing. Now Spinning. Up Next. Desktop stands built for collectors who want their setup to look as good as it sounds.</p>
 
       <div class="products-grid">
         <div class="product-card">
-          <div class="product-visual">&#127908;</div>
+          <div class="product-visual">
+            <img src="/images/product-now-playing-white.webp" alt="Rekkid Now Playing stand in white" />
+          </div>
           <div class="product-body">
-            <div class="product-title">Wall Display Mounts</div>
-            <p class="product-desc">Turn your favourite sleeves into wall art. Minimal, clean mounts that float your records off the wall.</p>
+            <div class="product-title">"Now Playing" Stand</div>
+            <p class="product-desc">Show off the record currently on the deck. A clean, minimal stand that lets the sleeve do the talking.</p>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-visual">&#128218;</div>
+          <div class="product-visual">
+            <img src="/images/product-now-spinning.webp" alt="Rekkid Now Spinning stand next to a turntable" />
+          </div>
           <div class="product-body">
-            <div class="product-title">Desktop Stands</div>
-            <p class="product-desc">Showcase the record currently on the turntable or keep your daily rotation within arm's reach.</p>
+            <div class="product-title">"Now Spinning" Stand</div>
+            <p class="product-desc">Made to sit right next to your turntable. The perfect companion for any listening session.</p>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-visual">&#128230;</div>
+          <div class="product-visual">
+            <img src="/images/product-shelf-display-2.webp" alt="Rekkid Up Next and Now Playing stands on a shelf" />
+          </div>
           <div class="product-body">
-            <div class="product-title">Storage &amp; Crates</div>
-            <p class="product-desc">Stylish crates and shelf dividers to organise your collection without hiding it away.</p>
+            <div class="product-title">"Up Next" Stand</div>
+            <p class="product-desc">Queue up what's coming. Pair it with a Now Playing stand for the full setup.</p>
           </div>
         </div>
       </div>
@@ -784,13 +639,7 @@
           </div>
         </div>
 
-        <div class="records-stack">
-          <div class="stack-record"></div>
-          <div class="stack-record"></div>
-          <div class="stack-record"></div>
-          <div class="stack-record"></div>
-          <div class="stack-holder">Rekkid Display Stand</div>
-        </div>
+        <img src="/images/product-now-playing-blue.webp" alt="Rekkid Now Playing stand on a desk" class="about-photo" />
       </div>
     </div>
   </section>
@@ -809,7 +658,7 @@
 
   <footer>
     <div class="footer-inner">
-      <div class="footer-logo">rekk<span>id</span></div>
+      <div class="footer-logo"><img src="/images/logo.webp" alt="Rekkid" /></div>
       <div class="footer-links">
         <a href="mailto:hello@rekkid.store">hello@rekkid.store</a>
         <a href="https://www.etsy.com/shop/rekkidau" target="_blank" rel="noopener">Etsy</a>
