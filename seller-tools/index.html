@@ -51,15 +51,11 @@
       height: 60px;
     }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: var(--dark);
-      text-decoration: none;
-      letter-spacing: -0.04em;
+    .logo img {
+      height: 36px;
+      width: auto;
+      display: block;
     }
-
-    .logo span { color: var(--orange); }
 
     nav ul {
       list-style: none;
@@ -300,14 +296,12 @@
       gap: 16px;
     }
 
-    .footer-logo {
-      font-size: 1.1rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      color: rgba(255,255,255,0.7);
+    .footer-logo img {
+      height: 28px;
+      width: auto;
+      display: block;
+      filter: brightness(0) invert(0.7);
     }
-
-    .footer-logo span { color: var(--orange); }
 
     footer a {
       color: rgba(255,255,255,0.5);
@@ -331,7 +325,7 @@
 
   <nav>
     <div class="nav-inner">
-      <a href="/" class="logo">rekk<span>id</span></a>
+      <a href="/" class="logo"><img src="/images/logo.webp" alt="Rekkid" /></a>
       <ul>
         <li><a href="/">Home</a></li>
         <li><a href="mailto:hello@rekkid.store">Contact</a></li>
@@ -460,7 +454,7 @@
 
   <footer>
     <div class="footer-inner">
-      <div class="footer-logo">rekk<span>id</span></div>
+      <div class="footer-logo"><img src="/images/logo.webp" alt="Rekkid" /></div>
       <div class="footer-links">
         <a href="/">Home</a>
         <a href="mailto:hello@rekkid.store">hello@rekkid.store</a>
