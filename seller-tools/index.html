@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seller Tools — Rekkid</title>
+  <meta name="description" content="Information about Rekkid's internal seller tools and Etsy API integration." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark: #1c1917;
+      --dark2: #292524;
+      --orange: #ea580c;
+      --orange-light: #fb923c;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --muted: #78716c;
+      --border: #e7e5e4;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--cream);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: -0.04em;
+    }
+
+    .logo span { color: var(--orange); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--dark); }
+
+    .nav-back {
+      background: var(--dark) !important;
+      color: var(--white) !important;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: var(--dark);
+      color: var(--white);
+      padding: 80px 24px;
+    }
+
+    .page-hero-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .page-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(234, 88, 12, 0.15);
+      border: 1px solid rgba(234, 88, 12, 0.3);
+      color: var(--orange-light);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .page-hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* CONTENT */
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 72px 24px 100px;
+    }
+
+    /* INFO CARDS */
+    .info-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      margin-bottom: 28px;
+    }
+
+    .info-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .info-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(234, 88, 12, 0.1);
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .info-card h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .info-card .subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .info-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .info-card p:last-child { margin-bottom: 0; }
+
+    /* DATA ACCESS LIST */
+    .data-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .data-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .data-list li::before {
+      content: '✓';
+      color: var(--orange);
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .data-list-no li::before {
+      content: '✗';
+      color: #ef4444;
+    }
+
+    /* SCOPES TABLE */
+    .scopes {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.88rem;
+    }
+
+    .scopes th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--cream);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .scopes td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .scopes tr:last-child td { border-bottom: none; }
+
+    .scope-name {
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      background: rgba(234, 88, 12, 0.08);
+      color: var(--orange);
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+
+    /* CONTACT */
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .contact-row a {
+      color: var(--orange);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .contact-row a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark2);
+      color: rgba(255,255,255,0.4);
+      padding: 40px 24px;
+      font-size: 0.85rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .footer-logo span { color: var(--orange); }
+
+    footer a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: rgba(255,255,255,0.8); }
+
+    .footer-links { display: flex; gap: 24px; }
+
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .info-card { padding: 24px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">rekk<span>id</span></a>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="mailto:hello@rekkid.store">Contact</a></li>
+        <li><a href="https://www.etsy.com/shop/rekkid" class="nav-back" target="_blank" rel="noopener">Shop on Etsy</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-tag">Internal Application</div>
+      <h1>Rekkid Seller Tools</h1>
+      <p>Private internal tooling used to manage, monitor, and optimise the Rekkid Etsy store operations. This page provides transparency about how the application works and what data it accesses.</p>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-icon">&#9881;</div>
+        <div>
+          <h2>What is Rekkid Seller Tools?</h2>
+          <div class="subtitle">Application overview</div>
+        </div>
+      </div>
+      <p>Rekkid Seller Tools is a private, internal application built to help the Rekkid Etsy store run more efficiently. It integrates with the Etsy API to give us a centralised view of our shop's performance — something the default Etsy seller dashboard doesn't fully provide.</p>
+      <p>The application is used exclusively by the Rekkid store owner for day-to-day store management. It is not a public product, not available to other sellers, and has no external users.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-icon">&#128200;</div>
+        <div>
+          <h2>Why do we need API access?</h2>
+          <div class="subtitle">Business justification</div>
+        </div>
+      </div>
+      <p>Running a growing Etsy store requires staying on top of inventory, pricing, listing performance, and order fulfilment. The native Etsy tools are limited and don't support the kind of analysis and automation that helps us provide a great customer experience.</p>
+      <p>API access allows us to:</p>
+      <ul class="data-list">
+        <li>Monitor listing performance and identify which products need attention</li>
+        <li>Track inventory levels across our product variants in real time</li>
+        <li>Review order status and fulfilment metrics to ensure timely dispatch</li>
+        <li>Analyse sales trends to make informed decisions about new products</li>
+        <li>Maintain listing consistency — descriptions, tags, pricing — across our catalogue</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-icon">&#128274;</div>
+        <div>
+          <h2>API scopes requested</h2>
+          <div class="subtitle">Data access permissions</div>
+        </div>
+      </div>
+      <p>The application requests only the scopes necessary to support store management functions. No scope is requested without a clear operational purpose.</p>
+      <table class="scopes">
+        <thead>
+          <tr>
+            <th>Scope</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="scope-name">listings_r</span></td>
+            <td>Read listing details, pricing, descriptions, and active status to monitor and audit our catalogue</td>
+          </tr>
+          <tr>
+            <td><span class="scope-name">listings_w</span></td>
+            <td>Update listing details such as descriptions, tags, and pricing for bulk maintenance tasks</td>
+          </tr>
+          <tr>
+            <td><span class="scope-name">transactions_r</span></td>
+            <td>Read order and transaction data to track sales performance and fulfilment</td>
+          </tr>
+          <tr>
+            <td><span class="scope-name">shops_r</span></td>
+            <td>Read shop-level data including stats and settings for performance reporting</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-icon">&#128100;</div>
+        <div>
+          <h2>Privacy Policy</h2>
+          <div class="subtitle">How we handle data</div>
+        </div>
+      </div>
+      <p>Rekkid Seller Tools accesses Etsy shop data solely to support internal store operations. We take data handling seriously.</p>
+
+      <hr class="divider" />
+
+      <p><strong>What data is accessed</strong></p>
+      <ul class="data-list">
+        <li>Shop listings — titles, descriptions, pricing, tags, inventory</li>
+        <li>Order and transaction records — order status, fulfilment data</li>
+        <li>Shop-level performance metrics</li>
+      </ul>
+
+      <hr class="divider" />
+
+      <p><strong>What we do not do</strong></p>
+      <ul class="data-list data-list-no">
+        <li>Store customer personal data outside of Etsy systems</li>
+        <li>Share, sell, or distribute any data to third parties</li>
+        <li>Use data for any purpose unrelated to operating the Rekkid store</li>
+        <li>Access data belonging to any shop other than Rekkid</li>
+      </ul>
+
+      <hr class="divider" />
+
+      <p>All data accessed through the Etsy API is used strictly for internal operational purposes. Data is retained only as long as needed for analysis and is not sold, shared, or used for advertising or marketing.</p>
+
+      <div class="contact-row">
+        Questions? <a href="mailto:hello@rekkid.store">hello@rekkid.store</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">rekk<span>id</span></div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="mailto:hello@rekkid.store">hello@rekkid.store</a>
+        <a href="https://www.etsy.com/shop/rekkid" target="_blank" rel="noopener">Etsy</a>
+      </div>
+      <div>&copy; 2025 Rekkid. All rights reserved.</div>
+    </div>
+  </footer>
+
+</body>
+</html>
